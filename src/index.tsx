@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { StrictMode, CSSProperties } from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 import { Article } from './components/article/Article';
 import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
@@ -13,6 +14,8 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
+	const [styleState, setStyleState] = React.useState<CSSProperties>({});
+
 	return (
 		<div
 			className={clsx(styles.main)}
@@ -23,9 +26,10 @@ const App = () => {
 					'--font-color': defaultArticleState.fontColor.value,
 					'--container-width': defaultArticleState.contentWidth.value,
 					'--bg-color': defaultArticleState.backgroundColor.value,
+					...styleState,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm />
+			<ArticleParamsForm onChange={setStyleState} />
 			<Article />
 		</div>
 	);
