@@ -26,10 +26,10 @@ type ArticleFormProps = {
 };
 
 export const ArticleParamsForm = ({ onChange }: ArticleFormProps) => {
-	const [openSidebar, setOpenSidebar] = React.useState(false);
+	const [isOpenSidebar, setIsOpenSidebar] = React.useState(false);
 	const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-	const [fontFamily, setFontFamily] = React.useState<OptionType | null>(
+	const [fontFamily, setFontFamily] = React.useState<OptionType>(
 		defaultArticleState.fontFamilyOption
 	);
 	const [fontSize, setFontSize] = React.useState<OptionType>(
@@ -77,12 +77,12 @@ export const ArticleParamsForm = ({ onChange }: ArticleFormProps) => {
 			sidebarRef.current &&
 			!sidebarRef.current.contains(event.target as Node)
 		) {
-			setOpenSidebar(false);
+			setIsOpenSidebar(false);
 		}
 	};
 
 	useEffect(() => {
-		if (openSidebar) {
+		if (isOpenSidebar) {
 			document.addEventListener('mousedown', handleClickOutside);
 		} else {
 			document.removeEventListener('mousedown', handleClickOutside);
@@ -91,18 +91,18 @@ export const ArticleParamsForm = ({ onChange }: ArticleFormProps) => {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [openSidebar]);
+	}, [isOpenSidebar]);
 
 	return (
 		<>
 			<ArrowButton
-				onClickSidebar={() => setOpenSidebar(!openSidebar)}
-				isOpen={openSidebar}
+				onClickSidebar={() => setIsOpenSidebar(!isOpenSidebar)}
+				isOpen={isOpenSidebar}
 			/>
 			<aside
 				ref={sidebarRef}
 				className={clsx(styles.container, {
-					[styles.container_open]: openSidebar,
+					[styles.container_open]: isOpenSidebar,
 				})}>
 				<form className={styles.form} onSubmit={handleAccept}>
 					<Text as={'h2'} weight={800} size={31} uppercase={true}>

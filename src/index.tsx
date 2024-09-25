@@ -14,21 +14,16 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	const [styleState, setStyleState] = React.useState<CSSProperties>({});
+	const [styleState, setStyleState] = React.useState<CSSProperties>({
+		'--font-family': defaultArticleState.fontFamilyOption.value,
+		'--font-size': defaultArticleState.fontSizeOption.value,
+		'--font-color': defaultArticleState.fontColor.value,
+		'--container-width': defaultArticleState.contentWidth.value,
+		'--bg-color': defaultArticleState.backgroundColor.value,
+	} as CSSProperties);
 
 	return (
-		<div
-			className={clsx(styles.main)}
-			style={
-				{
-					'--font-family': defaultArticleState.fontFamilyOption.value,
-					'--font-size': defaultArticleState.fontSizeOption.value,
-					'--font-color': defaultArticleState.fontColor.value,
-					'--container-width': defaultArticleState.contentWidth.value,
-					'--bg-color': defaultArticleState.backgroundColor.value,
-					...styleState,
-				} as CSSProperties
-			}>
+		<div className={clsx(styles.main)} style={styleState}>
 			<ArticleParamsForm onChange={setStyleState} />
 			<Article />
 		</div>
